@@ -9,6 +9,7 @@ public class Ball : MonoBehaviour
     public Transform paddle;
     public float speed;
     public Transform explosion;
+    public GameManager gm;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,10 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gm.gameOver){
+            return;
+        }
+
         if(!inPlay){
             transform.position = paddle.position;
         }
@@ -35,6 +40,7 @@ public class Ball : MonoBehaviour
             Debug.Log("Ball hit the bottom of the screen");
             rb.velocity = Vector2.zero;
             inPlay = false;
+            gm.UpdateLives(-1);
         }
     }
 
@@ -42,6 +48,8 @@ public class Ball : MonoBehaviour
         if(other.transform.CompareTag("brick"))  {
             Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
             Destroy(newExplosion.gameObject, 2.5f);
+            gm.UpdateScore(1);
+            gm.UpdateNumberOfBricks();
             Destroy(other.gameObject);
         }
     }
