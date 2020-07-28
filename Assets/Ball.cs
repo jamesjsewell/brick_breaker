@@ -22,6 +22,8 @@ public class Ball : MonoBehaviour
     void Update()
     {
         if(gm.gameOver){
+            inPlay = false;
+            rb.velocity = Vector2.zero;
             return;
         }
 
