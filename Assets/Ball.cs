@@ -10,11 +10,14 @@ public class Ball : MonoBehaviour
     public float speed;
     public Transform explosion;
     public GameManager gm;
+    AudioSource audio;
+    public AudioSource[] audioSources;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D> ();
+        audio = GetComponent<AudioSource>();
         
     }
 
@@ -34,6 +37,7 @@ public class Ball : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !inPlay){
             inPlay = true;
             rb.AddForce(Vector2.up * speed);
+            audioSources[3].Play();
         }
     }
 
@@ -43,16 +47,27 @@ public class Ball : MonoBehaviour
             rb.velocity = Vector2.zero;
             inPlay = false;
             gm.UpdateLives(-1);
+            audioSources[2].Play();
         }
     }
 
     void OnCollisionEnter2D(Collision2D other) {
+
+
+        
         if(other.transform.CompareTag("brick"))  {
             Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
             Destroy(newExplosion.gameObject, 2.5f);
             gm.UpdateScore(1);
             gm.UpdateNumberOfBricks();
             Destroy(other.gameObject);
+
+            audioSources[1].pitch = Random.Range(.2f,.4f);
+            audioSources[1].Play();
+            return;
         }
+        audioSources[0].pitch = Random.Range(1.5f,2.5f);
+        audioSources[0].Play();
+       
     }
 }

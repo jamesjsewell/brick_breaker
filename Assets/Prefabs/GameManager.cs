@@ -15,13 +15,20 @@ public class GameManager : MonoBehaviour
     public int numberOfBricks;
     public Transform[] levels;
     public int currentLevelIndex = 0;
+    AudioSource audio;
+     
 
     // Start is called before the first frame update
     void Start()
     {
-        livesText.text = "Lives: " + lives;
-        scoreText.text = "Score: " + score;
+        Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
+        
+        livesText.text = lives.ToString();
+        scoreText.text = score.ToString();
+        numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
+
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,15 +43,16 @@ public class GameManager : MonoBehaviour
 
         if(lives <= 0){
             lives = 0;
+            audio.Play();
             GameOver();
         }
 
-        livesText.text = "Lives: " + lives;
+        livesText.text = lives.ToString();
     }
 
     public void UpdateScore(int points) {
         score += points;
-        scoreText.text = "Score: " + score;
+        scoreText.text = score.ToString();
     }
 
     public void UpdateNumberOfBricks() {
