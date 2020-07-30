@@ -96,9 +96,9 @@ public class GameManager : MonoBehaviour
         int highScore = PlayerPrefs.GetInt("HIGHSCORE");
         if(score > highScore){
             PlayerPrefs.SetInt("HIGHSCORE", score);
-            highScoreText.text = "New High Score!";
+            highScoreText.text = "NEW HIGH SCORE!";
         } else {
-            highScoreText.text = highScore - score + " Away From Beating High Score " + highScore;
+            highScoreText.text = highScore - score + " AWAY FROM BEATING " + highScore;
         }
     }
 

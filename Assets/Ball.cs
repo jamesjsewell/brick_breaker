@@ -37,7 +37,7 @@ public class Ball : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !inPlay){
             inPlay = true;
             rb.AddForce(Vector2.up * speed);
-            audioSources[3].Play();
+            audioSources[0].Play();
         }
     }
 
@@ -56,15 +56,28 @@ public class Ball : MonoBehaviour
 
         
         if(other.transform.CompareTag("brick"))  {
-            Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
-            Destroy(newExplosion.gameObject, 2.5f);
-            gm.UpdateScore(1);
-            gm.UpdateNumberOfBricks();
-            Destroy(other.gameObject);
+            Brick brickScript = other.gameObject.GetComponent<Brick>();
+            if(brickScript.hitsToBreak > 1) {
+                brickScript.BreakBrick();
+            } else{
 
-            audioSources[1].pitch = Random.Range(.2f,.4f);
-            audioSources[1].Play();
-            return;
+                Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
+                // ParticleSystem explosionParticleSystem = newExplosion.GetComponent<ParticleSystem>();
+               
+                // var main = explosionParticleSystem.main;
+                // main.startColor = Color.grey;
+                Destroy(newExplosion.gameObject, 2.5f); 
+                gm.UpdateScore(brickScript.points);
+                gm.UpdateNumberOfBricks();
+                Destroy(other.gameObject);
+    
+
+                audioSources[1].pitch = Random.Range(.5f,1f);
+                audioSources[1].Play();
+                return;
+
+            }
+    
         }
         audioSources[0].pitch = Random.Range(1.5f,2.5f);
         audioSources[0].Play();
