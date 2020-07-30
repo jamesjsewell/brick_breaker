@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
 {
     public int lives = 3;
     public int score;
-    public Text livesText;
     public Text scoreText;
+    public Text highScoreText;
+    public Text gameOverPanelScoreText;
     public bool gameOver;
     public GameObject gameOverPanel;
     public int numberOfBricks;
     public Transform[] levels;
     public int currentLevelIndex = 0;
     AudioSource audio;
+    public Transform[] livesIcons;
      
 
     // Start is called before the first frame update
@@ -24,7 +26,6 @@ public class GameManager : MonoBehaviour
         Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
         
-        livesText.text = lives.ToString();
         scoreText.text = score.ToString();
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
 
@@ -47,7 +48,19 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        livesText.text = lives.ToString();
+        for (int i = 0; i < 10; i++) 
+        {
+            if(lives-1 < i) {
+                livesIcons[i].gameObject.SetActive(false);
+                continue;
+
+            }
+            livesIcons[i].gameObject.SetActive(true);
+             
+        }
+       
+
+
     }
 
     public void UpdateScore(int points) {
@@ -78,6 +91,15 @@ public class GameManager : MonoBehaviour
     void GameOver() {
         gameOver = true;
         gameOverPanel.SetActive(true);
+        gameOverPanelScoreText.text = score.ToString();
+
+        int highScore = PlayerPrefs.GetInt("HIGHSCORE");
+        if(score > highScore){
+            PlayerPrefs.SetInt("HIGHSCORE", score);
+            highScoreText.text = "New High Score!";
+        } else {
+            highScoreText.text = highScore - score + " Away From Beating High Score " + highScore;
+        }
     }
 
     public void PlayAgain() {
