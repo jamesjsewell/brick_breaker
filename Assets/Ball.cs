@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     public GameManager gm;
     AudioSource audio;
     public AudioSource[] audioSources;
+    public Transform powerup;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,11 @@ public class Ball : MonoBehaviour
 
         
         if(other.transform.CompareTag("brick"))  {
+            int randChance = Random.Range(1,101);
+            if(randChance < 20) {
+                Instantiate(powerup, other.transform.position, other.transform.rotation);
+            }
+
             Brick brickScript = other.gameObject.GetComponent<Brick>();
             if(brickScript.hitsToBreak > 1) {
                 brickScript.BreakBrick();

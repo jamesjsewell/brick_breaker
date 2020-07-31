@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int lives = 3;
     public int score;
     public Text scoreText;
+    public Text livesText;
     public Text highScoreText;
     public Text gameOverPanelScoreText;
     public bool gameOver;
@@ -17,8 +18,7 @@ public class GameManager : MonoBehaviour
     public Transform[] levels;
     public int currentLevelIndex = 0;
     AudioSource audio;
-    public Transform[] livesIcons;
-     
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,16 +48,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        for (int i = 0; i < 10; i++) 
-        {
-            if(lives-1 < i) {
-                livesIcons[i].gameObject.SetActive(false);
-                continue;
-
-            }
-            livesIcons[i].gameObject.SetActive(true);
-             
-        }
+        livesText.text = lives.ToString();
        
 
 
