@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     public Text gameOverPanelScoreText;
     public bool gameOver;
     public GameObject gameOverPanel;
+    public Text gameOverText;
     public int numberOfBricks;
     public Transform[] levels;
     public int currentLevelIndex = 0;
-    AudioSource audio;
     public Transform toggleSoundButton;
     public Sprite soundOffSprite;
     public Sprite soundOnSprite;
@@ -31,8 +31,6 @@ public class GameManager : MonoBehaviour
         
         scoreText.text = score.ToString();
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
-
-        audio = GetComponent<AudioSource>();
 
     }
 
@@ -48,7 +46,6 @@ public class GameManager : MonoBehaviour
 
         if(lives <= 0){
             lives = 0;
-            audio.Play();
             GameOver();
         }
 
@@ -67,6 +64,7 @@ public class GameManager : MonoBehaviour
         numberOfBricks--;
         if(numberOfBricks <= 0) {
             if(currentLevelIndex >= levels.Length-1) {
+                gameOverText.text = "COMPLETE";
                 GameOver();
             }
             else {
