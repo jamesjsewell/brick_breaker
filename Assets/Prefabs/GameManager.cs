@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public Transform[] levels;
     public int currentLevelIndex = 0;
     AudioSource audio;
+    public Transform toggleSoundButton;
+    public Sprite soundOffSprite;
+    public Sprite soundOnSprite;
 
 
     // Start is called before the first frame update
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
 
         audio = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -99,5 +103,17 @@ public class GameManager : MonoBehaviour
 
     public void Quit() {
         Application.Quit();
+    }
+
+    void ToggleSound() {
+ 
+        AudioListener.pause = !AudioListener.pause;
+
+        if(AudioListener.pause) {
+            toggleSoundButton.gameObject.GetComponent<Image>().sprite = soundOffSprite;
+        }
+        else{
+            toggleSoundButton.gameObject.GetComponent<Image>().sprite = soundOnSprite;
+        }
     }
 }

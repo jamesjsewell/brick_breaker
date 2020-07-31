@@ -68,10 +68,7 @@ public class Ball : MonoBehaviour
             } else{
 
                 Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
-                // ParticleSystem explosionParticleSystem = newExplosion.GetComponent<ParticleSystem>();
-               
-                // var main = explosionParticleSystem.main;
-                // main.startColor = Color.grey;
+      
                 Destroy(newExplosion.gameObject, 2.5f); 
                 gm.UpdateScore(brickScript.points);
                 gm.UpdateNumberOfBricks();
