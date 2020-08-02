@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     AudioSource audio;
     public AudioSource[] audioSources;
     public Transform powerup;
+    public Transform instructionsText;
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +40,12 @@ public class Ball : MonoBehaviour
             inPlay = true;
             rb.AddForce(Vector2.up * speed);
             audioSources[0].Play();
+            instructionsText.gameObject.SetActive(false);
         }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("bottom")){
-            Debug.Log("Ball hit the bottom of the screen");
             rb.velocity = Vector2.zero;
             inPlay = false;
             gm.UpdateLives(-1);
@@ -54,8 +55,6 @@ public class Ball : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other) {
 
-
-        
         if(other.transform.CompareTag("brick"))  {
             int randChance = Random.Range(1,101);
             if(randChance < 20) {
@@ -74,15 +73,12 @@ public class Ball : MonoBehaviour
                 gm.UpdateNumberOfBricks();
                 Destroy(other.gameObject);
     
-
-                audioSources[1].pitch = Random.Range(.5f,1f);
                 audioSources[1].Play();
-                return;
 
             }
     
         }
-        audioSources[0].pitch = Random.Range(1.5f,2.5f);
+    
         audioSources[0].Play();
        
     }

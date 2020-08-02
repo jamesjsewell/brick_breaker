@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: efc358f4dba13cb419e2bc8b91d94868
+guid: 2f4668dea208b894eb1b13a0719e1450
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - gameovercre
+  - SquareFont
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
